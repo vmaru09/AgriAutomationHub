@@ -5,13 +5,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Spinner;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +32,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import android.widget.AutoCompleteTextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.datepicker.MaterialDatePicker;
@@ -48,12 +44,13 @@ import okhttp3.Response;
 
 public class StatewiseMandiActivity extends AppCompatActivity {
 
-    private Spinner spinnerState, spinnerDistrict, spinnerCommodity;
+    private AutoCompleteTextView spinnerState, spinnerDistrict, spinnerCommodity;
     private TextView selectedDateText, mandiOutputTextView;
     private Button  btnFetch;
     RecyclerView recyclerView;
     MandiAdapter mandiAdapter;
     List<MandiData> mandiDataList = new ArrayList<>();
+
     private String selectedDate = "";
     private final HashMap<String, String[]> stateDistrictMap = new HashMap<>();
     private final HashMap<String, List<String>> stateToDistricts = new HashMap<>();
@@ -98,13 +95,20 @@ public class StatewiseMandiActivity extends AppCompatActivity {
         });
 
         loadCsvMappings();
+
         setupStateSpinner();
         setupCommoditySpinner();
 
+        // AutoCompleteTextView selection listener
+        spinnerState.setOnItemClickListener((parent, view, position, id) -> {
+            String selectedState = parent.getItemAtPosition(position).toString();
+            updateDistrictSpinner(selectedState);
+        });
+
         btnFetch.setOnClickListener(v -> {
-            String state = spinnerState.getSelectedItem().toString();
-            String district = spinnerDistrict.getSelectedItem().toString();
-            String commodity = spinnerCommodity.getSelectedItem().toString();
+            String state = spinnerState.getText().toString();
+            String district = spinnerDistrict.getText().toString();
+            String commodity = spinnerCommodity.getText().toString();
             String date = selectedDate;
 
             String key = (state + "-" + district).toLowerCase().trim();
@@ -124,14 +128,6 @@ public class StatewiseMandiActivity extends AppCompatActivity {
             );
 
             fetchAndParseHtml(url);
-        });
-
-        spinnerState.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                updateDistrictSpinner(spinnerState.getSelectedItem().toString());
-            }
-
-            @Override public void onNothingSelected(AdapterView<?> parent) {}
         });
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation_mandi);
@@ -204,8 +200,8 @@ public class StatewiseMandiActivity extends AppCompatActivity {
     private void setupStateSpinner() {
         List<String> sortedStates = new ArrayList<>(stateSet);
         Collections.sort(sortedStates);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, sortedStates);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_dropdown_item_1line, sortedStates);
         spinnerState.setAdapter(adapter);
     }
 
@@ -213,8 +209,8 @@ public class StatewiseMandiActivity extends AppCompatActivity {
         List<String> districts = stateToDistricts.get(selectedState);
         if (districts != null) {
             Collections.sort(districts);
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, districts);
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                    android.R.layout.simple_dropdown_item_1line, districts);
             spinnerDistrict.setAdapter(adapter);
         }
     }
@@ -222,8 +218,8 @@ public class StatewiseMandiActivity extends AppCompatActivity {
     private void setupCommoditySpinner() {
         List<String> commodities = new ArrayList<>(commodityMap.keySet());
         Collections.sort(commodities);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, commodities);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_dropdown_item_1line, commodities);
         spinnerCommodity.setAdapter(adapter);
     }
 
