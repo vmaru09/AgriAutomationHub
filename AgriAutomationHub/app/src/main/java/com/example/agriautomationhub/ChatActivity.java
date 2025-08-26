@@ -164,7 +164,6 @@ public class ChatActivity extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     // Extract the bot's response from the API response
                     String botResponse = response.body().getChoices().get(0).getMessage().getContent();
-                    Log.d("ChatActivity", "Bot response: " + botResponse);
 
                     // Add the bot response to the chat message list
                     ChatMessage botChatMessage = new ChatMessage(botResponse, false);

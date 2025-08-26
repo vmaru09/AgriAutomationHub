@@ -49,9 +49,6 @@
             android:name=".CropDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".MandiDetailActivity"
-            android:exported="false" />
-        <activity
             android:name=".ExpenseCalculatorActivity"
             android:exported="false"
             android:theme="@style/Theme.Material3.Light" />

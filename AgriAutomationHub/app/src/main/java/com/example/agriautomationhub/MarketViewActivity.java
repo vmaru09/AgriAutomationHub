@@ -280,7 +280,6 @@ public class MarketViewActivity extends AppCompatActivity {
             ArrayList<DataPoint> dataPoints = new ArrayList<>();  // Collect DataPoints here
 
             try (Connection conn = DriverManager.getConnection(ConnectionURL)) {
-                Log.d(TAG, "Please select a valid date.");
                 String query = "SELECT TOP 7 Date, maxValue FROM crop_prices WHERE districtName = ? AND mandiName = ? AND commName = ? ORDER BY Date DESC";
                 PreparedStatement statement = conn.prepareStatement(query);
                 statement.setString(1, district);

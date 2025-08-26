@@ -41,6 +41,8 @@ public class MainActivity extends AppCompatActivity implements OnServiceClickLis
 
     private TextView weatherInfo;
     private TextView weatherLocation;
+    private double temp;
+    private int humidity;
     private static final String API_KEY = "7e23b9a25a90846111d856e437e11535";
     private static final String BASE_URL = "https://api.openweathermap.org/data/2.5/";
 
@@ -78,6 +80,8 @@ public class MainActivity extends AppCompatActivity implements OnServiceClickLis
             Intent intent = new Intent(MainActivity.this, ChatActivity.class);
             startActivity(intent);
         });
+
+
 
 //        LinearLayout fertilizer = findViewById(R.id.fertilizer_calculator);
 //        fertilizer.setOnClickListener(v -> {
@@ -135,7 +139,11 @@ public class MainActivity extends AppCompatActivity implements OnServiceClickLis
                         break;
                     case 2:
                         // Crop Recommendation
-                        startActivity(new Intent(MainActivity.this, CropRecommenderActivity.class));
+                        // When opening CropRecommenderActivity
+                        Intent intent = new Intent(MainActivity.this, CropRecommenderActivity.class);
+                        intent.putExtra("temp", temp);
+                        intent.putExtra("humidity", humidity);
+                        startActivity(intent);
                         break;
                     case 3:
                         // News
@@ -248,18 +256,15 @@ public class MainActivity extends AppCompatActivity implements OnServiceClickLis
 
         Call<WeatherResponse> call = apiService.getCurrentWeather(latitude, longitude, API_KEY, "metric");
 
-        Log.d(TAG, "Request URL: " + call.request().url());  // Log the request URL
-
         call.enqueue(new Callback<WeatherResponse>() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onResponse(@NonNull Call<WeatherResponse> call, @NonNull Response<WeatherResponse> response) {
-                Log.d(TAG, "Response code: " + response.code());  // Log the response code
                 if (response.isSuccessful()) {
                     WeatherResponse weatherResponse = response.body();
                     if (weatherResponse != null) {
-                        double temp = weatherResponse.getMain().getTemp();
-                        int humidity = weatherResponse.getMain().getHumidity();
+                        temp = weatherResponse.getMain().getTemp();
+                        humidity = weatherResponse.getMain().getHumidity();
                         String description = weatherResponse.getWeather()[0].getDescription();
                         String location = weatherResponse.getName(); // Get the location
 
@@ -272,7 +277,6 @@ public class MainActivity extends AppCompatActivity implements OnServiceClickLis
                                 "Condition: " + description;
                         weatherInfo.setText(weatherText);
                         weatherLocation.setText(location +" , "+ currentDate); // Set the location text
-                        Log.d(TAG, "Weather data retrieved: " + weatherText);
                     } else {
                         weatherInfo.setText("No weather data available");
                         Log.e(TAG, "Weather response is null");

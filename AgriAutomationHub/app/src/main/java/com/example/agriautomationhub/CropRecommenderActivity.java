@@ -144,7 +144,6 @@
 //
 //        details.setOnClickListener(v -> {
 //            if (!predictedCrop.isEmpty()) {
-//                Log.d(TAG, "Predicted crop: " + predictedCrop);
 //                Intent intent = new Intent(CropRecommenderActivity.this, CropDetailActivity.class);
 //                intent.putExtra("cropName", predictedCrop);  // Pass the cleaned crop name
 //                startActivity(intent);
@@ -241,10 +240,13 @@ import java.nio.ByteOrder;
 
 public class CropRecommenderActivity extends AppCompatActivity {
     private static final String TAG = "CropRecommenderActivity";
-    EditText nitrogen, phosporus, potassium, temprature, humidity, ph, rainfall;
+
+    EditText nitrogen, phosporus, potassium, ph, rainfall;
     Button predict;
-    TextView output, details;
-    String predictedCrop = ""; // Declare predictedCrop as a member variable
+    TextView output, details, temperatureDisplay, humidityDisplay;
+    String predictedCrop = "";
+    double tempValue = 0.0;
+    int humidityValue = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -254,44 +256,57 @@ public class CropRecommenderActivity extends AppCompatActivity {
         nitrogen = findViewById(R.id.N_input);
         phosporus = findViewById(R.id.P_input);
         potassium = findViewById(R.id.K_input);
-        temprature = findViewById(R.id.temperature_input);
-        humidity = findViewById(R.id.humidity_input);
         ph = findViewById(R.id.ph_input);
         rainfall = findViewById(R.id.rainfall_input);
         predict = findViewById(R.id.recommender_btn);
         output = findViewById(R.id.output_text);
         details = findViewById(R.id.get_details);
 
+        // ✅ Get values passed from MainActivity
+        tempValue = getIntent().getDoubleExtra("temp", 0.0);
+        humidityValue = getIntent().getIntExtra("humidity", 0);
+
+        // ✅ Optional: Show them to user in TextView
+        temperatureDisplay = findViewById(R.id.temp_display_text);
+        humidityDisplay = findViewById(R.id.humidity_display_text);
+
+        if (temperatureDisplay != null) {
+            temperatureDisplay.setText("Temperature: " + tempValue + " °C");
+        }
+        if (humidityDisplay != null) {
+            humidityDisplay.setText("Humidity: " + humidityValue + " %");
+        }
+
         String[] labels = {"apple","banana","blackgram","chickpea","coconut","coffee", "cotton",
                 "grapes", "jute","kidneybeans","lentil","maize", "mango", "mothbeans",
                 "mungbean", "muskmelon","orange","papaya","pigeonpeas","pomegranate",
-                "rice","watermelon"};  // Replace with your actual crop labels
+                "rice","watermelon"};
 
         predict.setOnClickListener(v -> {
             CropRecommendationModel model = null;
             try {
                 model = CropRecommendationModel.newInstance(this);
 
-                // Get input values
+                // ✅ Get input values (without temp & humidity from user)
                 float nitrogenValue = Float.parseFloat(nitrogen.getText().toString());
                 float phosporusValue = Float.parseFloat(phosporus.getText().toString());
                 float potassiumValue = Float.parseFloat(potassium.getText().toString());
-                float tempratureValue = Float.parseFloat(temprature.getText().toString());
-                float humidityValue = Float.parseFloat(humidity.getText().toString());
                 float phValue = Float.parseFloat(ph.getText().toString());
                 float rainfallValue = Float.parseFloat(rainfall.getText().toString());
+
+                float tempratureValue = (float) tempValue;
+                float humidityVal = (float) humidityValue;
 
                 // Creates inputs for reference.
                 TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 7}, DataType.FLOAT32);
                 ByteBuffer byteBuffer = ByteBuffer.allocateDirect(7 * 4);
                 byteBuffer.order(ByteOrder.nativeOrder());
 
-                // Add values to the byte buffer
                 byteBuffer.putFloat(nitrogenValue);
                 byteBuffer.putFloat(phosporusValue);
                 byteBuffer.putFloat(potassiumValue);
                 byteBuffer.putFloat(tempratureValue);
-                byteBuffer.putFloat(humidityValue);
+                byteBuffer.putFloat(humidityVal);
                 byteBuffer.putFloat(phValue);
                 byteBuffer.putFloat(rainfallValue);
 
@@ -301,10 +316,9 @@ public class CropRecommenderActivity extends AppCompatActivity {
                 CropRecommendationModel.Outputs outputs = model.process(inputFeature0);
                 TensorBuffer outputFeature0 = outputs.getOutputFeature0AsTensorBuffer();
 
-                // Get the output array
                 float[] prediction = outputFeature0.getFloatArray();
 
-                // Find the index of the maximum value
+                // Find the max prediction
                 int maxIndex = -1;
                 float maxProbability = Float.NEGATIVE_INFINITY;
                 for (int i = 0; i < prediction.length; i++) {
@@ -314,14 +328,11 @@ public class CropRecommenderActivity extends AppCompatActivity {
                     }
                 }
 
-                // Get the label for the predicted class
-                predictedCrop = labels[maxIndex]; // Set the predictedCrop value
-
-                // Display the predicted crop
+                predictedCrop = labels[maxIndex];
                 output.setText(predictedCrop);
 
             } catch (IOException e) {
-                Log.e("CropRecommenderActivity", "Error loading model", e);
+                Log.e(TAG, "Error loading model", e);
             } catch (NumberFormatException e) {
                 output.setText("Please enter valid numbers in all fields.");
             } finally {
@@ -332,8 +343,7 @@ public class CropRecommenderActivity extends AppCompatActivity {
         });
 
         details.setOnClickListener(v -> {
-            if (!predictedCrop.isEmpty()) { // Check if predictedCrop is not empty
-                Log.d(TAG, "Predicted crop: " + predictedCrop);
+            if (!predictedCrop.isEmpty()) {
                 Intent intent = new Intent(CropRecommenderActivity.this, CropDetailActivity.class);
                 intent.putExtra("cropName", predictedCrop);
                 startActivity(intent);
@@ -359,7 +369,6 @@ public class CropRecommenderActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), MarketViewActivity.class));
                 return true;
             } else if (id == R.id.navigation_news) {
-                // Handle News navigation
                 startActivity(new Intent(getApplicationContext(), NewsActivity.class));
                 return true;
             } else if (id == R.id.navigation_mandi) {
@@ -372,7 +381,6 @@ public class CropRecommenderActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
@@ -396,9 +404,7 @@ public class CropRecommenderActivity extends AppCompatActivity {
     private boolean logoutUser() {
         FirebaseAuth.getInstance().signOut();
         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         finish();
         return true;

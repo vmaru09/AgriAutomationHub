@@ -236,7 +236,6 @@
 //    // Function to load labels from label.txt file
 //    private String[] loadLabels() throws IOException {
 //        String fileName = "labels.txt";
-//        Log.d("LoadLabels", "Loading labels from file: " + fileName);
 //        InputStream inputStream = getAssets().open(fileName);
 //        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 //        List<String> labels = new ArrayList<>();
@@ -271,7 +270,6 @@
 ////            reader.close();
 ////
 ////            String jsonContent = jsonBuilder.toString();
-////            Log.d("CropCure", "Loaded JSON content: " + jsonContent);  // Log the content for debugging
 ////
 ////            JSONObject jsonObject = new JSONObject(jsonContent);
 ////            if (jsonObject.has(diseaseName)) {
@@ -283,7 +281,6 @@
 ////                spannableCureInfo.setSpan(new StyleSpan(Typeface.BOLD), 0, spannableCureInfo.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 ////                cureTextView.setText(spannableCureInfo);
 ////            } else {
-////                Log.d("CropCure", "No cure information found for the disease: " + diseaseName);
 ////                Toast.makeText(this, "No cure information available", Toast.LENGTH_SHORT).show();
 ////            }
 ////        } catch (IOException e) {
@@ -450,7 +447,6 @@ public class CropCareActivity extends AppCompatActivity {
                         imgView.setImageURI(uri);
                         try {
                             img = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
-                            Log.d(TAG, "Image selected from gallery");
                         } catch (IOException e) {
                             Log.e(TAG, "Error loading image from gallery", e);
                         }
@@ -472,7 +468,6 @@ public class CropCareActivity extends AppCompatActivity {
                         if (imageBitmap != null) {
                             imgView.setImageBitmap(imageBitmap);
                             img = imageBitmap;
-                            Log.d(TAG, "Image captured from camera");
                         }
                     }
                 });
@@ -485,8 +480,6 @@ public class CropCareActivity extends AppCompatActivity {
                 Toast.makeText(this, "Please select or capture an image first", Toast.LENGTH_SHORT).show();
                 return;
             }
-
-            Log.d(TAG, "Image selected, preparing to encode and send");
 
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             img.compress(Bitmap.CompressFormat.JPEG, 90, baos);
@@ -501,8 +494,6 @@ public class CropCareActivity extends AppCompatActivity {
 //            jsonObject.addProperty("longitude", 16.608);
 //            jsonObject.addProperty("similar_images", false);
 
-            Log.d(TAG, "Sending JSON request to API: " + jsonObject.toString());
-
             DemoRetrofitClient.getInstance().getApi()
                     .predictJson(API_KEY, jsonObject)
                     .enqueue(new Callback<DemoResponse>() {
@@ -516,7 +507,6 @@ public class CropCareActivity extends AppCompatActivity {
                             }
 
                             DemoResponse dr = response.body();
-                            Log.d(TAG, "Received API response: " + new Gson().toJson(dr.result));
 
                             DemoResponse.Suggestion crop = dr.getTopCrop();
                             DemoResponse.Suggestion disease = dr.getTopDisease();
@@ -531,7 +521,6 @@ public class CropCareActivity extends AppCompatActivity {
                                         .append(") — ")
                                         .append(String.format("%.1f%%", crop.probability * 100))
                                         .append("\n\n");
-                                Log.d(TAG, "Top Crop: " + crop.name);
                             } else {
                                 resultText.append("No crop detected.\n\n");
                                 Log.w(TAG, "No crop suggestion found");
@@ -544,7 +533,6 @@ public class CropCareActivity extends AppCompatActivity {
                                         .append(disease.scientificName)
                                         .append(") — ")
                                         .append(String.format("%.1f%%", disease.probability * 100));
-                                Log.d(TAG, "Top Disease: " + disease.name);
                                 displayCureInfo(disease.name);
                             } else {
                                 resultText.append("No disease detected.");

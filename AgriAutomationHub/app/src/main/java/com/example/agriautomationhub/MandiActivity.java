@@ -175,8 +175,6 @@ public class MandiActivity extends AppCompatActivity {
                 categoryToCropMap.put(groupName, cropNames);
             }
 
-            Log.d(TAG, "category→crop via JSON: " + categoryToCropMap);
-
         } catch (Exception e) {
             Log.e(TAG, "Error loading crop_master.json", e);
         }
@@ -236,11 +234,7 @@ public class MandiActivity extends AppCompatActivity {
         }
         date = convertDate(date);
         String finalDate = date;
-        Log.d(TAG, "PAYLOAD → date=" + finalDate +
-                " dist=" + distCode +
-                " mandi=" + mandiCode +
-                " group=" + commGroupCode +
-                " comm=" + commCode);
+
         new MandiApi().fetchMandiData(date, distCode, mandiCode, commGroupCode, commCode, new Callback() {
             @Override public void onFailure(Call c, IOException e) { runOnUiThread(() -> Log.e(TAG, "net", e)); }
             @Override

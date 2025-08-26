@@ -61,7 +61,6 @@ public class CropDetailActivity extends AppCompatActivity {
         String cropName = intent.get().getStringExtra("cropName");
 
         if (cropName != null) {
-            Log.d(TAG, "Received crop name: " + cropName);
             // Convert to title case (capitalize first letter of each word)
             String titleCaseCropName = capitalizeFirstLetter(cropName);
             cropNameText.setText(titleCaseCropName);
@@ -120,8 +119,6 @@ public class CropDetailActivity extends AppCompatActivity {
                     break;
             }
 
-            Log.d(TAG, "Loading JSON file: " + jsonFileName);
-
             // Load the appropriate JSON file
             InputStream inputStream = getAssets().open(jsonFileName);
             int size = inputStream.available();
@@ -134,25 +131,29 @@ public class CropDetailActivity extends AppCompatActivity {
 
             if (jsonObject.has(cropName)) {
                 JSONObject cropObject = jsonObject.getJSONObject(cropName);
-                Log.d(TAG, "Crop details found for: " + cropName);
 
                 listDataHeader = new ArrayList<>();
                 listDataChild = new HashMap<>();
 
                 // Populate the expandable list with crop details
-                if(current_lang.equals("en"))
-                {
-                    for (String s : Arrays.asList("Plant Selection", "Planting", "Monitoring", "Site Selection", "Field Preparation", "Weeding", "Irrigation", "Fertilization Organic", "Fertilization Chemical", "Preventive Measure", "Plant Protection Chemical", "Harvesting", "Post-Harvest")) {
-                        populateListData(cropObject, s);
-                    }
-                }
-                else if(current_lang.equals("hi"))
-                {
-                    for (String s : Arrays.asList("पौधों का चयन", "बीजाई", "निगरानी", "स्थान चयन", "फसल की तैयारी", "खरपतवार", "सिंचाई", "कार्बनिक उर्वरक", "रासायनिक उर्वरक", "निवारक उपाय", "रसायनिक संरक्षण", "कटाई", "पोस्ट-हार्वेस्ट")) {
-                        populateListData(cropObject, s);
-                    }
+                Iterator<String> keys = cropObject.keys();
+                while (keys.hasNext()) {
+                    String s = keys.next();
+                    populateListData(cropObject, s);
                 }
 
+//                if(current_lang.equals("en"))
+//                {
+//                    for (String s : Arrays.asList("Plant Selection", "Planting", "Monitoring", "Site Selection", "Field Preparation", "Weeding", "Irrigation", "Fertilization Organic", "Fertilization Chemical", "Preventive Measure", "Plant Protection Chemical", "Harvesting", "Post-Harvest")) {
+//                        populateListData(cropObject, s);
+//                    }
+//                }
+//                else if(current_lang.equals("hi"))
+//                {
+//                    for (String s : Arrays.asList("पौधों का चयन", "बीजाई", "निगरानी", "स्थान चयन", "फसल की तैयारी", "खरपतवार", "सिंचाई", "कार्बनिक उर्वरक", "रासायनिक उर्वरक", "निवारक उपाय", "रसायनिक संरक्षण", "कटाई", "पोस्ट-हार्वेस्ट")) {
+//                        populateListData(cropObject, s);
+//                    }
+//                }
 
                 listAdapter = new CropDetailAdapter(this, listDataHeader, listDataChild);
                 expandableListView.setAdapter(listAdapter);
