@@ -45,6 +45,11 @@ public class ProfilePageActivity extends AppCompatActivity {
         usernameText = findViewById(R.id.editTextName);
         emailText = findViewById(R.id.editTextEmail);
 
+        findViewById(R.id.back_btn_profile).setOnClickListener(v -> {
+            startActivity(new Intent(this, MainActivity.class));
+            finish();
+        });
+
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             usernameText.setText(user.getDisplayName() != null ? user.getDisplayName() : "Username");
@@ -52,7 +57,7 @@ public class ProfilePageActivity extends AppCompatActivity {
             if (user.getPhotoUrl() != null) {
                 Glide.with(this).load(user.getPhotoUrl()).circleCrop().into(profileImage);
             } else {
-                profileImage.setImageResource(R.drawable.ic_profile);
+                profileImage.setImageResource(R.drawable.ic_profile_icon);
             }
         }
 
@@ -85,16 +90,16 @@ public class ProfilePageActivity extends AppCompatActivity {
             if (id == R.id.navigation_home) {
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 return true;
-            } else if (id == R.id.navigation_marketView) {
+            } else if (id == R.id.navigation_profile) {
                 // Handle News navigation
-                startActivity(new Intent(getApplicationContext(), MarketViewActivity.class));
+                startActivity(new Intent(getApplicationContext(), ProfilePageActivity.class));
                 return false;
             }else if (id == R.id.navigation_news) {
                 // Handle News navigation
                 startActivity(new Intent(getApplicationContext(), NewsActivity.class));
                 return false;
             } else if (id == R.id.navigation_mandi) {
-                startActivity(new Intent(getApplicationContext(), MandiActivity.class));
+                startActivity(new Intent(getApplicationContext(), StatewiseMandiActivity.class));
                 return true;
             }
             return false;

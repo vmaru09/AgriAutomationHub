@@ -66,7 +66,7 @@ public class SettingsPage extends AppCompatActivity {
             if (user.getPhotoUrl() != null) {
                 Glide.with(this).load(user.getPhotoUrl()).circleCrop().into(profileImage);
             } else {
-                profileImage.setImageResource(R.drawable.ic_profile); // Fallback image
+                profileImage.setImageResource(R.drawable.ic_profile_icon); // Fallback image
             }
         }
 

@@ -25,13 +25,14 @@
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Material3.Light"
+        android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"
         tools:targetApi="31">
         <activity
             android:name=".ProfilePageActivity"
             android:exported="false" />
         <activity
             android:name=".StatewiseMandiActivity"
+            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"
             android:exported="false" />
         <activity
             android:name=".SchemesActivity"
@@ -78,9 +79,6 @@
             android:exported="false" />
         <activity
             android:name=".Automatic_Irrigation"
-            android:exported="false" />
-        <activity
-            android:name=".MandiActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

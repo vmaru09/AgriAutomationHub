@@ -557,12 +557,12 @@ public class CropCareActivity extends AppCompatActivity {
             int id = item.getItemId();
             if (id == R.id.navigation_home) {
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
-            } else if (id == R.id.navigation_marketView) {
-                startActivity(new Intent(getApplicationContext(), MarketViewActivity.class));
+            } else if (id == R.id.navigation_profile) {
+                startActivity(new Intent(getApplicationContext(), ProfilePageActivity.class));
             } else if (id == R.id.navigation_news) {
                 startActivity(new Intent(getApplicationContext(), NewsActivity.class));
             } else if (id == R.id.navigation_mandi) {
-                startActivity(new Intent(CropCareActivity.this, MandiActivity.class));
+                startActivity(new Intent(CropCareActivity.this, StatewiseMandiActivity.class));
             }
             return false;
         });

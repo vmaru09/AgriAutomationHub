@@ -365,14 +365,14 @@ public class CropRecommenderActivity extends AppCompatActivity {
             if (id == R.id.navigation_home) {
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 return true;
-            } else if (id == R.id.navigation_marketView) {
-                startActivity(new Intent(getApplicationContext(), MarketViewActivity.class));
+            } else if (id == R.id.navigation_profile) {
+                startActivity(new Intent(getApplicationContext(), ProfilePageActivity.class));
                 return true;
             } else if (id == R.id.navigation_news) {
                 startActivity(new Intent(getApplicationContext(), NewsActivity.class));
                 return true;
             } else if (id == R.id.navigation_mandi) {
-                startActivity(new Intent(CropRecommenderActivity.this, MandiActivity.class));
+                startActivity(new Intent(CropRecommenderActivity.this, StatewiseMandiActivity.class));
                 return true;
             }
             return false;

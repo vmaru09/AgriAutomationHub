@@ -45,7 +45,7 @@
                 android:layout_height="100dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
-                android:src="@drawable/ic_profile" />
+                android:src="@drawable/ic_profile_icon" />
 
             <TextView
                 android:id="@+id/user_name"

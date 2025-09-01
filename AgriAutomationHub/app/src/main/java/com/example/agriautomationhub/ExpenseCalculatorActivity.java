@@ -51,7 +51,10 @@ public class ExpenseCalculatorActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), NewsActivity.class));
                 return true;
             } else if (id == R.id.navigation_mandi) {
-                startActivity(new Intent(getApplicationContext(), MandiActivity.class));
+                startActivity(new Intent(getApplicationContext(), StatewiseMandiActivity.class));
+                return true;
+            }else if (id == R.id.navigation_profile) {
+                startActivity(new Intent(getApplicationContext(), ProfilePageActivity.class));
                 return true;
             }
             return false;

@@ -121,7 +121,6 @@ public class MarketViewActivity extends AppCompatActivity {
         });
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation_market_view);
-        bottomNavigationView.setSelectedItemId(R.id.navigation_marketView);
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
             if (id == R.id.navigation_home) {
@@ -132,18 +131,11 @@ public class MarketViewActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), NewsActivity.class));
                 return false;
             } else if (id == R.id.navigation_mandi) {
-                startActivity(new Intent(getApplicationContext(), MandiActivity.class));
+                startActivity(new Intent(getApplicationContext(), StatewiseMandiActivity.class));
                 return false;
             }
             return false;
         });
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation_market_view);
-        bottomNavigationView.setSelectedItemId(R.id.navigation_marketView);
     }
 
     private void loadJsonData() {
