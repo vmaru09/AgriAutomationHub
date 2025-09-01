@@ -77,7 +77,10 @@ public class FertilizerCalculatorActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), NewsActivity.class));
                 return true;
             } else if (id == R.id.navigation_mandi) {
-                startActivity(new Intent(FertilizerCalculatorActivity.this, MandiActivity.class));
+                startActivity(new Intent(FertilizerCalculatorActivity.this, StatewiseMandiActivity.class));
+                return true;
+            } else if (id == R.id.navigation_profile) {
+                startActivity(new Intent(FertilizerCalculatorActivity.this, ProfilePageActivity.class));
                 return true;
             }
             return false;

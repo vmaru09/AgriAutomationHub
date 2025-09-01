@@ -137,9 +137,9 @@ public class StatewiseMandiActivity extends AppCompatActivity {
             if (id == R.id.navigation_home) {
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 return false;
-            }else if (id == R.id.navigation_marketView) {
+            }else if (id == R.id.navigation_profile) {
                 // Handle News navigation
-                startActivity(new Intent(getApplicationContext(), MarketViewActivity.class));
+                startActivity(new Intent(getApplicationContext(), ProfilePageActivity.class));
                 return false;
             } else if (id == R.id.navigation_news) {
                 // Handle News navigation

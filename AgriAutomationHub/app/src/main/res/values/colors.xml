@@ -28,6 +28,10 @@
     <!-- Define bottom navigation icon color -->
     <color name="bottom_nav_icon_color">#000000</color>
 
+
+    <color name="drawer_header_background">#2E4057</color>
+    <color name="drawer_background">#37474F</color>
+
     <color name="primary">#9BC5C1</color>
     <color name="secondary">#FF03DAC5</color>
     <color name="night_mode">#6124B1</color>

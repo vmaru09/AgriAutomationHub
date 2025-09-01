@@ -41,7 +41,10 @@ public class HelpActivity extends AppCompatActivity {
                     startActivity(new Intent(getApplicationContext(), NewsActivity.class));
                     return true;
                 } else if (id == R.id.navigation_mandi) {
-                    startActivity(new Intent(HelpActivity.this, MandiActivity.class));
+                    startActivity(new Intent(HelpActivity.this, StatewiseMandiActivity.class));
+                    return true;
+                } else if (id == R.id.navigation_profile) {
+                    startActivity(new Intent(HelpActivity.this, ProfilePageActivity.class));
                     return true;
                 }
                 return false;

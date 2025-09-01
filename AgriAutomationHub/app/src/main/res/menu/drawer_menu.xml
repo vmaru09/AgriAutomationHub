@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/ic_person"
+            android:title="Profile" />
+        <item
+            android:id="@+id/nav_language"
+            android:icon="@drawable/ic_language"
+            android:title="Language" />
+<!--        <item-->
+<!--            android:id="@+id/nav_users"-->
+<!--            android:icon="@drawable/ic_users"-->
+<!--            android:title="Users" />-->
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_logout"
+            android:title="Logout" />
+    </group>
+
+    <item android:title=" ">
+        <menu>
+            <item
+                android:id="@+id/nav_facebook"
+                android:icon="@drawable/ic_facebook"
+                android:title="Facebook Page" />
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_share"
+                android:title="Share AgriAutomatioHub App" />
+        </menu>
+    </item>
+
+    <item android:title=" ">
+        <menu>
+            <item
+                android:id="@+id/nav_privacy"
+                android:title="Privacy Policy" />
+            <item
+                android:id="@+id/nav_terms"
+                android:title="Terms of Use" />
+            <item
+                android:id="@+id/nav_support"
+                android:title="Support" />
+        </menu>
+    </item>
+
+</menu>

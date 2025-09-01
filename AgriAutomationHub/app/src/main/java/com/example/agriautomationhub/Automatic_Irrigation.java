@@ -59,16 +59,16 @@ public class Automatic_Irrigation extends AppCompatActivity {
                 if (id == R.id.navigation_home) {
                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
                     return false;
-                }else if (id == R.id.navigation_marketView) {
+                }else if (id == R.id.navigation_profile) {
                     // Handle News navigation
-                    startActivity(new Intent(getApplicationContext(), MarketViewActivity.class));
+                    startActivity(new Intent(getApplicationContext(), ProfilePageActivity.class));
                     return false;
                 }else if (id == R.id.navigation_news) {
                     // Handle News navigation
                     startActivity(new Intent(getApplicationContext(), NewsActivity.class));
                     return false;
                 } else if (id == R.id.navigation_mandi) {
-                    startActivity(new Intent(Automatic_Irrigation.this, MandiActivity.class));
+                    startActivity(new Intent(Automatic_Irrigation.this, StatewiseMandiActivity.class));
                     return false;
                 }
                 return false;
