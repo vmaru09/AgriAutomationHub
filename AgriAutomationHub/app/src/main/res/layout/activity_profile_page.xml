@@ -51,42 +51,63 @@
             android:orientation="vertical"
             android:gravity="center_horizontal">
 
+            <!-- Profile Image -->
             <ImageView
                 android:id="@+id/profile_image"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:src="@drawable/ic_profile_icon"
-                android:layout_marginBottom="20dp" />
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@drawable/ic_profile"
+                android:layout_marginBottom="20dp"
+                android:scaleType="centerCrop"
+                android:background="@drawable/circular_background"
+                android:padding="4dp" />
 
+            <!-- Name -->
             <EditText
                 android:id="@+id/editTextName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="User Name"
                 android:inputType="textPersonName"
-                android:padding="10dp" />
+                android:padding="12dp"
+                android:layout_marginTop="8dp"/>
 
+            <!-- Email (read-only) -->
             <EditText
                 android:id="@+id/editTextEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Email"
                 android:inputType="textEmailAddress"
-                android:padding="10dp" />
+                android:padding="12dp"
+                android:layout_marginTop="8dp"
+                android:enabled="false"/>
 
+            <!-- Phone -->
+            <EditText
+                android:id="@+id/editTextPhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Phone Number"
+                android:inputType="phone"
+                android:padding="12dp"
+                android:layout_marginTop="8dp"/>
+
+            <!-- Update Button -->
             <Button
                 android:id="@+id/btnUpdate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Update Profile"
-                android:layout_marginTop="16dp" />
+                android:layout_marginTop="20dp" />
 
+            <!-- Change Password -->
             <Button
                 android:id="@+id/btnChangePassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Change Password"
-                android:layout_marginTop="8dp" />
+                android:layout_marginTop="12dp" />
         </LinearLayout>
     </ScrollView>
 

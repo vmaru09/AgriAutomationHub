@@ -282,8 +282,15 @@
             android:layout_gravity="bottom|end"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="80dp"
+            android:contentDescription="ChatBot"
             android:src="@drawable/ic_chatbot"
-            app:backgroundTint="@color/teal_700" />
+            app:tint="@null"
+            app:backgroundTint="@android:color/transparent"
+            app:rippleColor="@android:color/transparent"
+            android:stateListAnimator="@null"
+            android:elevation="0dp"
+            app:maxImageSize="120dp"/>
+
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <!-- Navigation Drawer -->

@@ -87,8 +87,8 @@ public class MandiActivity extends AppCompatActivity {
             } else if (id == R.id.navigation_news) {
                 startActivity(new Intent(MandiActivity.this, NewsActivity.class));
                 return true;
-            } else if (id == R.id.navigation_marketView) {
-                startActivity(new Intent(MandiActivity.this, MarketViewActivity.class));
+            } else if (id == R.id.navigation_profile) {
+                startActivity(new Intent(MandiActivity.this, ProfilePageActivity.class));
                 return true;
             }
             return false;
