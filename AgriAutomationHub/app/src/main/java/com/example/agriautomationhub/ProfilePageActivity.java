@@ -23,11 +23,11 @@ import com.canhub.cropper.CropImageContract;
 import com.canhub.cropper.CropImageContractOptions;
 import com.canhub.cropper.CropImageOptions;
 import com.canhub.cropper.CropImageView;
+import com.example.agriautomationhub.utils.PrefsManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -43,6 +43,7 @@ public class ProfilePageActivity extends AppCompatActivity {
     private FirebaseUser user;
     private FirebaseFirestore db;
     private StorageReference storageRef;
+    private PrefsManager prefs;
 
     private static final int CAMERA_PERMISSION_CODE = 101;
 
@@ -89,11 +90,15 @@ public class ProfilePageActivity extends AppCompatActivity {
         user = FirebaseAuth.getInstance().getCurrentUser();
         db = FirebaseFirestore.getInstance("profile-data");
         storageRef = FirebaseStorage.getInstance().getReference("profile_pics/");
+        prefs = new PrefsManager(this);
 
         findViewById(R.id.back_btn_profile).setOnClickListener(v -> {
             startActivity(new Intent(this, MainActivity.class));
             finish();
         });
+
+        // Load from cache first (instant UI)
+        loadFromCache();
 
         if (user != null) {
             loadUserProfile();
@@ -101,7 +106,6 @@ public class ProfilePageActivity extends AppCompatActivity {
 
         Button saveButton = findViewById(R.id.btnUpdate);
         saveButton.setOnClickListener(v -> updateProfile());
-
         profileImage.setOnClickListener(v -> showImageSourceDialog());
 
         Button changePassword = findViewById(R.id.btnChangePassword);
@@ -128,45 +132,71 @@ public class ProfilePageActivity extends AppCompatActivity {
             int id = item.getItemId();
             if (id == R.id.navigation_home) {
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                return true;
-            } else if (id == R.id.navigation_profile) {
-                startActivity(new Intent(getApplicationContext(), ProfilePageActivity.class));
-                return false;
+                finish();
             } else if (id == R.id.navigation_news) {
                 startActivity(new Intent(getApplicationContext(), NewsActivity.class));
-                return false;
+                finish();
             } else if (id == R.id.navigation_mandi) {
                 startActivity(new Intent(getApplicationContext(), StatewiseMandiActivity.class));
-                return true;
+                finish();
             }
             return false;
         });
     }
 
+    private void loadFromCache() {
+        usernameText.setText(prefs.getName());
+        emailText.setText(prefs.getEmail());
+        phoneText.setText(prefs.getPhone());
+
+        String imageUrl = prefs.getImageUrl();
+        if (!imageUrl.isEmpty()) {
+            Glide.with(this).load(imageUrl).circleCrop().into(profileImage);
+        } else {
+            profileImage.setImageResource(R.drawable.ic_profile);
+        }
+    }
+
     private void loadUserProfile() {
-        DocumentReference userRef = db.collection("users").document(user.getUid());
-        userRef.get().addOnSuccessListener(documentSnapshot -> {
-            if (documentSnapshot.exists()) {
-                String name = documentSnapshot.getString("name");
-                String email = documentSnapshot.getString("email");
-                String phone = documentSnapshot.getString("phone");
+        db.collection("users").document(user.getUid())
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        String name = documentSnapshot.getString("name");
+                        String email = documentSnapshot.getString("email");
+                        String phone = documentSnapshot.getString("phone");
+                        String imageUrl = documentSnapshot.getString("photoUrl");
 
-                // Backward compatibility: accept both
-                String imageUrl = documentSnapshot.contains("photoUrl")
-                        ? documentSnapshot.getString("photoUrl")
-                        : documentSnapshot.getString("profileImage");
+                        usernameText.setText(name);
+                        emailText.setText(email);
+                        phoneText.setText(phone);
 
-                usernameText.setText(name);
-                emailText.setText(email);
-                phoneText.setText(phone);
+                        if (imageUrl != null && !imageUrl.isEmpty()) {
+                            Glide.with(this).load(imageUrl).circleCrop().into(profileImage);
+                        }
 
-                if (imageUrl != null && !imageUrl.isEmpty()) {
-                    Glide.with(this).load(imageUrl).circleCrop().into(profileImage);
-                } else {
-                    profileImage.setImageResource(R.drawable.ic_profile);
-                }
-            }
-        });
+                        // ✅ Save to local cache
+                        prefs.saveUser(name, phone, email, imageUrl);
+                    }
+                });
+    }
+
+    private void saveUserData(DocumentReference userRef, String name, String email, String phone, String imageUrl) {
+        Map<String, Object> updates = new HashMap<>();
+        updates.put("name", name);
+        updates.put("email", email);
+        updates.put("phone", phone);
+        if (imageUrl != null) updates.put("photoUrl", imageUrl);
+
+        userRef.update(updates)
+                .addOnSuccessListener(aVoid -> {
+                    Toast.makeText(this, "Profile updated successfully", Toast.LENGTH_SHORT).show();
+                    // ✅ Update cache instantly
+                    prefs.saveUser(name, phone, email, imageUrl);
+                })
+                .addOnFailureListener(e ->
+                        Toast.makeText(this, "Failed to update profile", Toast.LENGTH_SHORT).show()
+                );
     }
 
     private void showImageSourceDialog() {
@@ -235,23 +265,11 @@ public class ProfilePageActivity extends AppCompatActivity {
             saveUserData(userRef, newName, user.getEmail(), newPhone, null);
         }
     }
-
-    private void saveUserData(DocumentReference userRef, String name, String email, String phone, String imageUrl) {
-        Map<String, Object> updates = new HashMap<>();
-        updates.put("name", name);
-        updates.put("email", email);
-        updates.put("phone", phone);
-
-        if (imageUrl != null) {
-            updates.put("photoUrl", imageUrl); // unified field
-        }
-
-        userRef.update(updates)
-                .addOnSuccessListener(aVoid ->
-                        Toast.makeText(this, "Profile updated successfully", Toast.LENGTH_SHORT).show()
-                )
-                .addOnFailureListener(e ->
-                        Toast.makeText(this, "Failed to update profile", Toast.LENGTH_SHORT).show()
-                );
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish(); // close current
     }
 }

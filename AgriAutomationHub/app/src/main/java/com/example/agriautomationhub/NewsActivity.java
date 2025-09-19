@@ -54,17 +54,24 @@ public class NewsActivity extends AppCompatActivity {
             int id = item.getItemId();
             if (id == R.id.navigation_home) {
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                return false;
+                finish();
             } else if (id == R.id.navigation_profile) {
                 // Handle News navigation
                 startActivity(new Intent(getApplicationContext(), ProfilePageActivity.class));
-                return false;
+                finish();
             } else if (id == R.id.navigation_mandi) {
                 startActivity(new Intent(getApplicationContext(), StatewiseMandiActivity.class));
-                return false;
+                finish();
             }
             return false;
         });
+    }
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish(); // finish this activity so it won’t reopen on back
     }
 
     @Override
@@ -128,46 +135,6 @@ public class NewsActivity extends AppCompatActivity {
                 recyclerView.setAdapter(newsAdapter);
             }
         });
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_logout) {
-            return logoutUser();
-        }
-        if (id == R.id.action_profile) {
-            return settings();
-        }
-        if (id == R.id.action_help) {
-            Intent intent = new Intent(getApplicationContext(), HelpActivity.class);
-            startActivity(intent);
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    private boolean logoutUser() {
-        FirebaseAuth.getInstance().signOut();
-        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-        finish();
-        return true;
-    }
-
-    private boolean settings() {
-        Intent intent = new Intent(getApplicationContext(), ProfilePageActivity.class);
-        startActivity(intent);
-        return true;
     }
 }
 

@@ -45,6 +45,7 @@
             android:exported="false" />
         <activity
             android:name=".ChatActivity"
+            android:theme="@style/Theme.AgriAutomationHub"
             android:exported="false" />
         <activity
             android:name=".SellingPriceCalculatorActivity"

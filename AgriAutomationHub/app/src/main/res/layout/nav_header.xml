@@ -38,14 +38,6 @@
             android:layout_height="match_parent"
             android:layout_weight="1" />
 
-        <ImageView
-            android:id="@+id/drawer_close"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/ic_close"
-            android:tint="@color/white"
-            android:contentDescription="Close drawer" />
-
     </LinearLayout>
 
     <!-- User Profile Section -->
@@ -56,15 +48,15 @@
         android:orientation="horizontal"
         android:padding="16dp">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/nav_user_image"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginEnd="16dp"
-            android:background="@drawable/circular_background"
-            android:contentDescription="User Profile"
-            android:padding="2dp"
-            android:src="@drawable/ic_person_placeholder" />
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/ic_person_placeholder"
+            android:scaleType="centerCrop"
+            android:layout_gravity="center_horizontal"
+            android:contentDescription="Profile Image" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -76,7 +68,7 @@
                 android:id="@+id/nav_user_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nirmal Choudhary"
+                android:text=""
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -86,7 +78,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:text="9569860651"
+                android:text=""
                 android:textColor="@color/light_gray"
                 android:textSize="14sp" />
 
@@ -95,7 +87,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:text="example@email.com"
+                android:text=""
                 android:textColor="@color/light_gray"
                 android:textSize="14sp" />
 

@@ -18,16 +18,16 @@
             android:id="@+id/profile_image"
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:src="@drawable/ic_person"  
+            android:src="@drawable/ic_person"
             android:scaleType="centerCrop"
             android:background="@drawable/circle_background"
             android:layout_marginBottom="12dp" />
 
-        <Button
-            android:id="@+id/upload_image_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Upload Photo (Optional)" />
+<!--        <Button-->
+<!--            android:id="@+id/upload_image_btn"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Upload Photo (Optional)" />-->
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -54,7 +54,7 @@
             android:layout_marginTop="16dp">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/email_input"
+                android:id="@+id/register_email_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"

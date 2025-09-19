@@ -94,40 +94,40 @@ public class ChatActivity extends AppCompatActivity {
         }).start();
     }
 
-    // Inflate the menu
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_chat, menu);
-        return true;
-    }
-
-    // Handle menu item selection
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_new_chat) {
-            startNewChat();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void startNewChat() {
-        // Clear the chat history from the database
-        new Thread(() -> {
-            db.messageDao().deleteAllMessages(); // Call to delete all messages from the database
-            runOnUiThread(() -> {
-                // Clear the message list in the UI
-                messageList.clear();
-                messageAdapter.notifyDataSetChanged();
-
-                // Add the welcome message for the new chat
-                messageList.add(new ChatMessage(WELCOME_MESSAGE, false));
-                messageAdapter.notifyItemInserted(messageList.size() - 1);
-                recyclerViewMessages.scrollToPosition(messageList.size() - 1);
-            });
-        }).start();
-    }
+//    // Inflate the menu
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.menu_chat, menu);
+//        return true;
+//    }
+//
+//    // Handle menu item selection
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        int id = item.getItemId();
+//        if (id == R.id.action_new_chat) {
+//            startNewChat();
+//            return true;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
+//
+//    private void startNewChat() {
+//        // Clear the chat history from the database
+//        new Thread(() -> {
+//            db.messageDao().deleteAllMessages(); // Call to delete all messages from the database
+//            runOnUiThread(() -> {
+//                // Clear the message list in the UI
+//                messageList.clear();
+//                messageAdapter.notifyDataSetChanged();
+//
+//                // Add the welcome message for the new chat
+//                messageList.add(new ChatMessage(WELCOME_MESSAGE, false));
+//                messageAdapter.notifyItemInserted(messageList.size() - 1);
+//                recyclerViewMessages.scrollToPosition(messageList.size() - 1);
+//            });
+//        }).start();
+//    }
 
     private void sendMessage() {
         String userMessage = inputMessage.getText().toString().trim();

@@ -308,7 +308,6 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.View;
 import android.widget.GridLayout;
 import android.widget.TextView;
@@ -321,6 +320,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.bumptech.glide.Glide;
+import com.example.agriautomationhub.utils.PrefsManager;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -328,13 +329,13 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -351,7 +352,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView weatherInfo;
     private TextView weatherLocation;
 
-    private TextView navUserName, navUserEmail;
+    private TextView navUserName, navUserPhone, navUserEmail;
+    private CircleImageView navUserImage;
 
     private static final String API_KEY = "7e23b9a25a90846111d856e437e11535";
     private static final String BASE_URL = "https://api.openweathermap.org/data/2.5/";
@@ -360,6 +362,7 @@ public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
+    private PrefsManager prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -372,8 +375,9 @@ public class MainActivity extends AppCompatActivity {
         // Firebase init
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance("profile-data");
-
+        prefs = new PrefsManager(this);
         FirebaseUser currentUser = mAuth.getCurrentUser();
+
         if (currentUser == null) {
             // if user not logged in → go to login
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
@@ -397,26 +401,57 @@ public class MainActivity extends AppCompatActivity {
         // Fetch navigation header views
         View headerView = navigationView.getHeaderView(0);
         navUserName = headerView.findViewById(R.id.nav_user_name);
+        navUserPhone = headerView.findViewById(R.id.nav_user_phone);
         navUserEmail = headerView.findViewById(R.id.nav_user_email);
+        navUserImage = headerView.findViewById(R.id.nav_user_image);
 
-        // Load user info from Firestore
-        loadUserProfile(currentUser.getUid());
+        if (currentUser != null) {
+            String uid = currentUser.getUid();
+
+            // 1️⃣ Fetch once after login (saves in SharedPreferences)
+            fetchUserData(uid);
+
+            // 2️⃣ Load instantly from SharedPreferences
+            loadUserProfile(uid);
+
+            // 3️⃣ Keep listening for updates (realtime sync)
+            listenForUserUpdates(uid);
+        }
+
+        drawerLayout.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
+            @Override
+            public void onDrawerClosed(@NonNull View drawerView) {
+                super.onDrawerClosed(drawerView);
+                navigationView.getMenu().setGroupCheckable(0, true, false);
+                for (int i = 0; i < navigationView.getMenu().size(); i++) {
+                    navigationView.getMenu().getItem(i).setChecked(false);
+                }
+                navigationView.getMenu().setGroupCheckable(0, true, true);
+            }
+        });
 
         navigationView.setNavigationItemSelectedListener(item -> {
             int id = item.getItemId();
-            if (id == R.id.drawer_close) {
-                drawerLayout.closeDrawer(GravityCompat.START);
-                return true;
-            } else if (id == R.id.nav_profile) {
+            if (id == R.id.nav_profile) {
                 startActivity(new Intent(this, ProfilePageActivity.class));
             } else if (id == R.id.nav_language) {
                 showLanguageSelectionDialog();
             } else if (id == R.id.nav_logout) {
-                mAuth.signOut();
-                startActivity(new Intent(this, LoginActivity.class));
+                FirebaseAuth.getInstance().signOut();
+                prefs.clearUser();
+                Intent intent = new Intent(this, LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
                 finish();
             }
+
             drawerLayout.closeDrawer(GravityCompat.START);
+
+            // 🔑 clear highlight
+            for (int i = 0; i < navigationView.getMenu().size(); i++) {
+                navigationView.getMenu().getItem(i).setChecked(false);
+            }
+
             return true;
         });
 
@@ -445,15 +480,47 @@ public class MainActivity extends AppCompatActivity {
         initializeBottomNavigation();
     }
 
-    private void loadUserProfile(String uid) {
+    private void fetchUserData(String uid) {
         db.collection("users").document(uid).get()
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {
                         String name = documentSnapshot.getString("name");
+                        String phone = documentSnapshot.getString("phone");
                         String email = documentSnapshot.getString("email");
+                        String imageUrl = documentSnapshot.getString("photoUrl");
 
-                        navUserName.setText(name != null ? name : "User");
-                        navUserEmail.setText(email != null ? email : "");
+                        prefs.saveUser(name, phone, email, imageUrl);
+
+                        // Update NavDrawer immediately
+                        loadUserProfile(uid);
+                    }
+                });
+    }
+
+    private void loadUserProfile(String uid) {
+        navUserName.setText(prefs.getName());
+        navUserPhone.setText(prefs.getPhone());
+        navUserEmail.setText(prefs.getEmail());
+
+        Glide.with(this)
+                .load(prefs.getImageUrl())
+                .placeholder(R.drawable.ic_person_placeholder) // fallback image
+                .into(navUserImage);
+    }
+
+    private void listenForUserUpdates(String uid) {
+        db.collection("users").document(uid)
+                .addSnapshotListener((snapshot, e) -> {
+                    if (snapshot != null && snapshot.exists()) {
+                        String name = snapshot.getString("name");
+                        String phone = snapshot.getString("phone");
+                        String email = snapshot.getString("email");
+                        String imageUrl = snapshot.getString("photoUrl");
+
+                        prefs.saveUser(name, phone, email, imageUrl);
+
+                        // Update NavDrawer UI instantly
+                        loadUserProfile(uid);
                     }
                 });
     }
@@ -478,9 +545,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            drawerLayout.closeDrawer(GravityCompat.START);
+            drawerLayout.closeDrawer(GravityCompat.START); // close drawer first
         } else {
-            super.onBackPressed();
+            finishAffinity(); // closes all activities
         }
     }
 
