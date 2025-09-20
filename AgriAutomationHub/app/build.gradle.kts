@@ -92,7 +92,6 @@ dependencies {
     implementation(libs.recyclerview)
     testImplementation ("junit:junit:4.13.2")
 //    implementation ("com.microsoft.sqlserver:mssql-jdbc:12.8.1.jre11")
-    implementation(libs.firebase.database)
     implementation(libs.play.services.fitness)
     implementation(libs.cardview)
     testImplementation(libs.junit)

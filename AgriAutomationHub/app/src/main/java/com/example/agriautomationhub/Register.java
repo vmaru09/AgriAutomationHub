@@ -63,7 +63,7 @@ public class Register extends AppCompatActivity {
 
 
         nameInput = findViewById(R.id.name_input);
-        emailInput = findViewById(R.id.email_input);
+        emailInput = findViewById(R.id.register_email_input);
         phoneInput = findViewById(R.id.phone_input);  // Add this in XML
         passwordInput = findViewById(R.id.password_input);
         registerButton = findViewById(R.id.register_btn);
