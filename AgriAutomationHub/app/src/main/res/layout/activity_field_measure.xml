@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Top Toolbar -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <!-- Info Bar (Area + Spinner) -->
+    <LinearLayout
+        android:id="@+id/info_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="#CC000000"
+        android:padding="8dp"
+        android:layout_below="@id/toolbar">
+
+        <TextView
+            android:id="@+id/area_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Area: 0"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:layout_weight="1"/>
+
+        <Spinner
+            android:id="@+id/unit_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:drawable/btn_dropdown"
+            android:layout_marginStart="8dp"/>
+    </LinearLayout>
+
+    <!-- Map Fragment -->
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/info_bar"
+        android:layout_above="@id/bottom_navigation_main"/>
+
+    <!-- Undo & Clear Buttons -->
+    <LinearLayout
+        android:id="@+id/left_controls"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_margin="12dp"
+        android:layout_below="@id/info_bar">
+
+        <ImageButton
+            android:id="@+id/btn_undo"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/round_button_bg"
+            android:src="@android:drawable/ic_menu_revert"
+            android:contentDescription="Undo" />
+
+        <ImageButton
+            android:id="@+id/btn_clear"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/round_button_bg"
+            android:src="@android:drawable/ic_menu_close_clear_cancel"
+            android:contentDescription="Clear" />
+    </LinearLayout>
+
+    <!-- Relocate (My Location) Button -->
+    <ImageButton
+        android:id="@+id/btn_my_location"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="12dp"
+        android:layout_below="@id/info_bar"
+        android:background="@drawable/round_button_bg"
+        android:src="@android:drawable/ic_menu_mylocation"
+        android:contentDescription="My Location" />
+
+    <!-- Zoom Controls -->
+    <LinearLayout
+        android:id="@+id/zoom_controls"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentEnd="true"
+        android:layout_above="@id/bottom_navigation_main"
+        android:layout_margin="16dp">
+
+        <ImageButton
+            android:id="@+id/btn_zoom_in"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/round_button_bg"
+            android:src="@android:drawable/ic_input_add"
+            android:contentDescription="Zoom In" />
+
+        <ImageButton
+            android:id="@+id/btn_zoom_out"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/round_button_bg"
+            android:src="@drawable/ic_input_subtract"
+            android:contentDescription="Zoom Out" />
+    </LinearLayout>
+
+    <!-- Bottom Navigation (Static) -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:menu="@menu/bottom_nav_menu" />
+
+</RelativeLayout>

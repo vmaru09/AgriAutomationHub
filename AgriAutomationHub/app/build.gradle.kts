@@ -77,6 +77,10 @@ dependencies {
     implementation("com.google.firebase:firebase-storage")
     implementation("com.google.firebase:firebase-database")
     implementation("com.squareup.picasso:picasso:2.71828")
+    implementation ("com.google.maps.android:android-maps-utils:3.4.0")
+    implementation ("com.google.android.libraries.places:places:3.4.0")
+
+
     implementation("com.google.android.gms:play-services-auth:19.2.0")
     implementation ("com.squareup.okhttp3:okhttp:4.10.0")
     implementation ("org.apache.poi:poi:5.2.3")
@@ -90,6 +94,8 @@ dependencies {
     implementation ("org.apache.poi:poi-ooxml:5.2.3")
     implementation ("org.apache.commons:commons-csv:1.10.0")
     implementation(libs.recyclerview)
+    implementation(libs.play.services.maps)
+//    implementation(libs.places.compat)
     testImplementation ("junit:junit:4.13.2")
 //    implementation ("com.microsoft.sqlserver:mssql-jdbc:12.8.1.jre11")
     implementation(libs.play.services.fitness)

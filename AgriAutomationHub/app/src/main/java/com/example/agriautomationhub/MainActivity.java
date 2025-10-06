@@ -604,7 +604,7 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
             if (id == R.id.navigation_news) {
-                startActivity(new Intent(MainActivity.this, NewsActivity.class));
+                startActivity(new Intent(MainActivity.this, FieldMeasureActivity.class));
                 return false;
             } else if (id == R.id.navigation_profile) {
                 startActivity(new Intent(MainActivity.this, ProfilePageActivity.class));

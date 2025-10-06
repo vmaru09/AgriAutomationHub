@@ -17,6 +17,7 @@
         android:name="com.google.android.gms.games.APP_ID"
         android:value="@string/app_id" />
 
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -46,6 +47,9 @@
         <activity
             android:name=".ChatActivity"
             android:theme="@style/Theme.AgriAutomationHub"
+            android:exported="false" />
+        <activity
+            android:name=".FieldMeasureActivity"
             android:exported="false" />
         <activity
             android:name=".SellingPriceCalculatorActivity"
@@ -109,6 +113,10 @@
         <service
             android:name=".BackgroundInternetService"
             android:exported="false" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyC9nAU7r82S84RDI3emmchkSLlLaB7o6VY" />
     </application>
 
 </manifest>
