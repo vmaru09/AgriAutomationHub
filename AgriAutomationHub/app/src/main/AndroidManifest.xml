@@ -58,9 +58,8 @@
             android:name=".CropDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".ExpenseCalculatorActivity"
-            android:exported="false"
-            android:theme="@style/Theme.Material3.Light" />
+            android:name=".PrivacyTermsActivity"
+            android:exported="false" />
         <activity
             android:name=".CropRecommenderActivity"
             android:exported="false" />

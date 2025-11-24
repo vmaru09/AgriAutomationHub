@@ -17,7 +17,7 @@
             android:id="@+id/tvMarket"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Market: "
+            android:text="@string/market"
             android:textStyle="bold"
             android:textSize="16sp"
             android:layout_margin="4dp"
@@ -28,7 +28,7 @@
             android:id="@+id/tvCommodity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Commodity: "
+            android:text="@string/commodity"
             android:layout_margin="4dp"
             android:textSize="14sp" />
 
@@ -36,14 +36,14 @@
             android:id="@+id/tvMinPrice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Min Price: "
+            android:text="@string/min_price"
             android:layout_margin="4dp"
             android:textSize="14sp" />
         <TextView
             android:id="@+id/tvMaxPrice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Max Price: "
+            android:text="@string/max_price"
             android:layout_margin="4dp"
             android:textSize="14sp" />
 
@@ -51,7 +51,7 @@
             android:id="@+id/tvDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Date: "
+            android:text="@string/date"
             android:layout_margin="4dp"
             android:textSize="14sp" />
     </LinearLayout>

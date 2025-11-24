@@ -58,7 +58,7 @@
                             android:id="@+id/weather_location"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="City, Date"
+                            android:text="@string/city_date"
                             android:textColor="@android:color/black"
                             android:textSize="18sp"
                             android:textStyle="bold" />
@@ -68,7 +68,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
-                            android:text="Unable to get location"
+                            android:text="@string/unable_to_get_location"
                             android:textColor="@android:color/darker_gray"
                             android:textSize="16sp" />
                     </LinearLayout>
@@ -78,7 +78,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Smart Support"
+                    android:text="@string/smart_support"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:layout_marginTop="16dp"
@@ -115,7 +115,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Auto Irrigation"
+                            android:text="@string/auto_irrigation"
                             android:textSize="18sp"
                             android:textColor="@color/black"
                             android:gravity="center"
@@ -142,7 +142,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Disease Detection"
+                            android:text="@string/disease_detection"
                             android:textSize="18sp"
                             android:textColor="@color/black"
                             android:gravity="center"
@@ -170,7 +170,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Crop Recommender"
+                        android:text="@string/crop_recommender"
                         android:textSize="18sp"
                         android:gravity="center"
                         android:textColor="@color/black"
@@ -199,7 +199,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="Selling Price Calculator"
+                        android:text="@string/selling_price_calculator"
                         android:textSize="18sp"
                         android:textColor="@color/black"
                         android:layout_marginTop="8dp" />
@@ -226,7 +226,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="News"
+                        android:text="@string/news"
                         android:textSize="14sp"
                         android:textColor="@color/black"
                         android:gravity="center"
@@ -254,7 +254,63 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Mandi View"
+                        android:text="@string/mandi_view"
+                        android:textSize="18sp"
+                        android:gravity="center"
+                        android:textColor="@color/black"
+                        android:layout_marginTop="8dp" />
+                </LinearLayout>
+
+                <!-- Field Measure -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="180dp"
+                    android:layout_columnWeight="1"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:padding="16dp"
+                    android:background="@drawable/card_bg"
+                    android:clickable="true"
+                    android:elevation="6dp"
+                    android:focusable="true">
+
+                    <ImageView
+                        android:layout_width="86dp"
+                        android:layout_height="86dp"
+                        android:src="@drawable/ic_field" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/field_measure"
+                        android:textSize="18sp"
+                        android:gravity="center"
+                        android:textColor="@color/black"
+                        android:layout_marginTop="8dp" />
+                </LinearLayout>
+
+                <!-- Market Trend -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="180dp"
+                    android:layout_columnWeight="1"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:padding="16dp"
+                    android:background="@drawable/card_bg"
+                    android:clickable="true"
+                    android:elevation="6dp"
+                    android:focusable="true">
+
+                    <ImageView
+                        android:layout_width="86dp"
+                        android:layout_height="86dp"
+                        android:src="@drawable/ic_market" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/market_trend_analysis"
                         android:textSize="18sp"
                         android:gravity="center"
                         android:textColor="@color/black"
@@ -282,7 +338,7 @@
             android:layout_gravity="bottom|end"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="80dp"
-            android:contentDescription="ChatBot"
+            android:contentDescription="@string/chatbot"
             android:src="@drawable/ic_chatbot"
             app:tint="@null"
             app:backgroundTint="@android:color/transparent"

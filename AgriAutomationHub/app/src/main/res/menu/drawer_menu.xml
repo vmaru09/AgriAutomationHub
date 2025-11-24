@@ -7,19 +7,16 @@
         <item
             android:id="@+id/nav_profile"
             android:icon="@drawable/ic_person"
-            android:title="Profile" />
+            android:title="@string/profile" />
         <item
             android:id="@+id/nav_language"
             android:icon="@drawable/ic_language"
-            android:title="Language" />
-<!--        <item-->
-<!--            android:id="@+id/nav_users"-->
-<!--            android:icon="@drawable/ic_users"-->
-<!--            android:title="Users" />-->
+            android:title="@string/languages" />
+
         <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/ic_logout"
-            android:title="Logout" />
+            android:title="@string/logout" />
     </group>
 
     <item android:title=" ">
@@ -39,13 +36,13 @@
         <menu>
             <item
                 android:id="@+id/nav_privacy"
-                android:title="Privacy Policy" />
+                android:title="@string/privacy_policy" />
             <item
                 android:id="@+id/nav_terms"
-                android:title="Terms of Use" />
+                android:title="@string/terms_of_use" />
             <item
                 android:id="@+id/nav_support"
-                android:title="Support" />
+                android:title="@string/support" />
         </menu>
     </item>
 

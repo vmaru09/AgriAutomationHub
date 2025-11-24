@@ -109,8 +109,9 @@
         <item>lentil</item>
         <item>grapes</item>
         <item>papaya</item>
-        <!-- Add more crops as needed -->
+
     </string-array>
+
     <string name="title_activity_navigation_drawer">NavigationDrawer</string>
     <string name="crop_not_detected">Crop Not Detected</string>
     <string name="fertilizer_calculator">Fertilizer Calculator</string>
@@ -166,6 +167,35 @@
     <string name="yield_quintal">Yield (Quintal)</string>
     <string name="lowest_selling_price_0_00">Lowest Selling Price: ₹0.00</string>
     <string name="hint_enter_yield">Enter Yield</string>
+    <string name="chat_bot">Chat Bot</string>
+    <string name="type_a_message">Type a message...</string>
+    <string name="city_date">City, Date</string>
+    <string name="unable_to_get_location">Unable to get location</string>
+    <string name="smart_support">Smart Support</string>
+    <string name="disease_detection">Disease Detection</string>
+    <string name="crop_recommender">Crop Recommender</string>
+    <string name="mandi_view">Mandi View</string>
+    <string name="field_measure">Field Measure</string>
+    <string name="chatbot">ChatBot</string>
+    <string name="user_name">User Name</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="update_profile">Update Profile</string>
+    <string name="change_password">Change Password</string>
+    <string name="select_state">Select State</string>
+    <string name="select_district">Select District</string>
+    <string name="select_crop">Select Crop</string>
+    <string name="fetch_report">Fetch Report</string>
+    <string name="category">Category</string>
+    <string name="expense_name">Expense Name</string>
+    <string name="market">Market:</string>
+    <string name="commodity">Commodity:</string>
+    <string name="min_price">Min Price:</string>
+    <string name="max_price">Max Price:</string>
+    <string name="date">Date:</string>
+    <string name="privacy_policy" translatable="false">Privacy Policy</string>
+    <string name="terms_of_use" translatable="false">Terms of Use</string>
+    <string name="support" translatable="false">Support</string>
+    <string name="market_trend_analysis">Market Trend</string>
 
     <string-array name="filter_options">
         <item>All Schemes</item>
@@ -174,5 +204,12 @@
         <item>Subsidy</item>
         <item>Loans</item>
     </string-array>
+
+    <string name="privacy_title" translatable="false">Privacy Policy</string>
+    <string name="privacy_content" translatable="false"> <br/><br/> <b>1. Introduction\n</b><br/> Welcome to AgriAutomationHub (the “Application”, “we”, “our”, “us”). We respect your privacy and are committed to protecting your personal data. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our Application.\n\n <br/><br/> <b>2. Information We Collect</b><br/> • Personal Information: e.g., your name, email address, phone number, login credentials, farm-details.\n • Usage Data: features accessed, actions taken, device information, IP address.\n • Sensor / Automated Data: environmental data, equipment data, crop/soil data, device identifiers.\n • Location Data: if the Application requests location services.\n • Communications Data: messages or queries you send to us.\n\n <br/><br/> <b>3. How We Use Your Information</b><br/> • To provide, operate and improve the Application.\n • To personalise your experience.\n • To monitor usage and prevent fraud.\n • To communicate with you.\n • To comply with legal obligations.\n\n <br/><br/> <b>4. Sharing of Your Information</b><br/> • With service providers.\n • With affiliates or partners (with your consent).\n • For legal requirements.\n • During business transfers.\n\n <br/><br/> <b>5. Data Security</b><br/> We use technical and organisational measures to protect your data. However, no electronic system is completely secure.\n\n <br/><br/> <b>6. Data Retention</b><br/> We retain your personal information only as long as necessary.\n\n <br/><br/> <b>7. Your Rights</b><br/> You may request access, correction, deletion or opt-out, depending on applicable laws.\n\n <br/><br/> <b>8. Children’s Privacy</b><br/> The Application is not intended for children under 18.\n\n <br/><br/> <b>9. International Transfers</b><br/> Your data may be transferred outside India with appropriate safeguards.\n\n <br/><br/> <b>10. Changes to This Privacy Policy</b><br/> We may update this Privacy Policy and will post updates here.\n\n <br/><br/> <b>11. Contact Us</b><br/> For any privacy-related queries, contact us at:\n Email: agriautomationhub@gmail.com\n Last updated: Date. </string>
+    <string name="terms_title" translatable="false">Terms and Conditions</string>
+    <string name="terms_content" translatable="false"> <br/><br/> <b>1. Acceptance of Terms</b><br/> By using the Application, you agree to be bound by these Terms and Conditions and our Privacy Policy.\n\n <br/><br/> <b>2. Eligibility</b><br/> You must be at least 18 years old or have authority to use the Application on behalf of an organisation.\n\n <br/><br/> <b>3. Licence to Use</b><br/> We grant you a limited, non-transferable licence to use the Application for personal or authorised business purposes.\n\n <br/><br/> <b>4. User Responsibilities</b><br/> • Provide accurate information.\n • Protect your login credentials.\n • Use the Application lawfully.\n • Comply with applicable laws.\n\n <br/><br/> <b>5. Prohibited Uses</b><br/> You must not:\n • Reverse-engineer the Application.\n • Transmit malicious code.\n • Interfere with Application operations.\n • Harvest or collect data without permission.\n\n <br/><br/> <b>6. Intellectual Property</b><br/> All content and code belong to the developer/company.\n\n <br/><br/> <b>7. Third-Party Services</b><br/> We are not responsible for third-party services linked through the Application.\n\n <br/><br/> <b>8. Disclaimers and Liability</b><br/> • The Application is provided “as is”.\n • No guarantee of error-free performance.\n • No guaranteed agricultural outcomes.\n\n <br/><br/> <b>9. Indemnification</b><br/> You agree to indemnify us from claims or damages related to your use of the Application.\n\n <br/><br/> <b>10. Termination</b><br/> We may terminate your access at any time. Upon termination, your licence ends.\n\n <br/><br/> <b>11. Governing Law</b><br/> These Terms are governed by Indian law and disputes fall under the courts of Your City/State.\n\n <br/><br/> <b>12. Changes to Terms</b><br/> We may update these Terms. Continued use means acceptance.\n </string>
+    <string name="support_title" translatable="false">Support</string>
+    <string name="support_content" translatable="false"> <br/><br/> <b>We’re Here to Help</b><br/> At AgriAutomationHub, we’re committed to making your farming automation and monitoring experience smooth, reliable, and valuable. Whether you need help using the app, troubleshooting issues, or understanding features, our support team is here for you.\n\n <br/><br/> <b>Contact Support</b><br/> If you face any issue or have questions, reach out to us anytime:\n • Email: agriautomationhub@gmail.com\n • Response Time: Within 24–48 hours\n • Support Hours: Monday to Saturday, 9:00 AM – 7:00 PM (IST)\n\n <br/><br/> <b>Common Issues We Help With</b><br/> • Account creation and login issues\n • Sensor/Device connection problems\n • App navigation or feature clarification\n • Data sync, analytics or dashboard errors\n • Bugs, crashes or unexpected app behaviour\n • General queries about automation, setup and usage\n\n <br/><br/> <b>How to Report an Issue</b><br/> When writing to us, please include:\n 1. Your Name\n 2. Registered Email or Mobile Number\n 3. Description of the Issue\n 4. Screenshot or Video (optional)\n\n <br/><br/> <b>Feature Requests and Feedback</b><br/> Have an idea that can make AgriAutomationHub better?\n Send your suggestions to: agriautomationhub@gmail.com\n\n <br/><br/> <b>Thank You for Using AgriAutomationHub</b><br/> We appreciate your trust and support. Our goal is to help you automate your workflow, save time, and boost productivity on your farm.\n </string>
 
 </resources>

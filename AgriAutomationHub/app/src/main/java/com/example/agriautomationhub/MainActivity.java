@@ -443,6 +443,8 @@ public class MainActivity extends AppCompatActivity {
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
                 finish();
+            } else if (id == R.id.nav_privacy) {
+                startActivity(new Intent(this, PrivacyTermsActivity.class));
             }
 
             drawerLayout.closeDrawer(GravityCompat.START);
@@ -593,6 +595,12 @@ public class MainActivity extends AppCompatActivity {
                     case 5:
                         startActivity(new Intent(MainActivity.this, StatewiseMandiActivity.class));
                         break;
+                    case 6:
+                        startActivity(new Intent(MainActivity.this, FieldMeasureActivity.class));
+                        break;
+                    case 7:
+                        startActivity(new Intent(MainActivity.this, MarketViewActivity.class));
+                        break;
                 }
             });
         }
@@ -604,7 +612,7 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
             if (id == R.id.navigation_news) {
-                startActivity(new Intent(MainActivity.this, FieldMeasureActivity.class));
+                startActivity(new Intent(MainActivity.this, NewsActivity.class));
                 return false;
             } else if (id == R.id.navigation_profile) {
                 startActivity(new Intent(MainActivity.this, ProfilePageActivity.class));

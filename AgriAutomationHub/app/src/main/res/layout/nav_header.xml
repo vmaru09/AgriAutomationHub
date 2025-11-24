@@ -69,7 +69,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -79,7 +79,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:text=""
-                android:textColor="@color/light_gray"
+                android:textColor="@color/black"
                 android:textSize="14sp" />
 
             <TextView
@@ -88,7 +88,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:text=""
-                android:textColor="@color/light_gray"
+                android:textColor="@color/black"
                 android:textSize="14sp" />
 
         </LinearLayout>

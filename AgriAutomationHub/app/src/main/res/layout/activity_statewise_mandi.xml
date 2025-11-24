@@ -125,7 +125,7 @@
                                 android:id="@+id/spinnerState"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:hint="Select State"
+                                android:hint="@string/select_state"
                                 android:completionThreshold="1"
                                 android:inputType="text"
                                 android:imeOptions="actionDone" />
@@ -154,7 +154,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="District name"
+                            android:text="@string/district_name"
                             android:textColor="@color/text_primary"
                             android:textSize="16sp" />
 
@@ -168,7 +168,7 @@
                                 android:id="@+id/spinnerDistrict"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:hint="Select District"
+                                android:hint="@string/select_district"
                                 android:completionThreshold="1"
                                 android:inputType="text"
                                 android:imeOptions="actionDone" />
@@ -197,7 +197,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Crop"
+                            android:text="@string/crop"
                             android:textColor="@color/text_primary"
                             android:textSize="16sp" />
 
@@ -211,7 +211,7 @@
                                 android:id="@+id/spinnerCommodity"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:hint="Select Crop"
+                                android:hint="@string/select_crop"
                                 android:completionThreshold="1"
                                 android:inputType="text"
                                 android:imeOptions="actionDone" />
@@ -226,7 +226,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:textSize="18sp"
-                android:text="Fetch Report" />
+                android:text="@string/fetch_report" />
 
             <!-- RecyclerView -->
             <androidx.recyclerview.widget.RecyclerView

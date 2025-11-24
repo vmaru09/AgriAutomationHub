@@ -98,7 +98,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_alignParentEnd="true"
-        android:layout_above="@id/bottom_navigation_main"
+        android:layout_alignParentBottom="true"
         android:layout_margin="16dp">
 
         <ImageButton
@@ -118,13 +118,5 @@
             android:src="@drawable/ic_input_subtract"
             android:contentDescription="Zoom Out" />
     </LinearLayout>
-
-    <!-- Bottom Navigation (Static) -->
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navigation_main"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        app:menu="@menu/bottom_nav_menu" />
 
 </RelativeLayout>

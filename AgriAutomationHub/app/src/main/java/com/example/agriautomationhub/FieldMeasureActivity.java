@@ -115,28 +115,30 @@ public class FieldMeasureActivity extends AppCompatActivity implements OnMapRead
             Places.initialize(getApplicationContext(), "AIzaSyC9nAU7r82S84RDI3emmchkSLlLaB7o6VY");
         }
 
-        setupBottomNavigation();
+//        setupBottomNavigation();
     }
 
-    private void setupBottomNavigation() {
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation_main);
-        bottomNavigationView.setSelectedItemId(R.id.navigation_news);
-
-        bottomNavigationView.setOnItemSelectedListener(item -> {
-            int id = item.getItemId();
-            if (id == R.id.navigation_home) {
-                startActivity(new Intent(FieldMeasureActivity.this, MainActivity.class));
-                return true;
-            } else if (id == R.id.navigation_profile) {
-                startActivity(new Intent(FieldMeasureActivity.this, ProfilePageActivity.class));
-                return true;
-            } else if (id == R.id.navigation_mandi) {
-                startActivity(new Intent(FieldMeasureActivity.this, StatewiseMandiActivity.class));
-                return true;
-            }
-            return false;
-        });
-    }
+//    private void setupBottomNavigation() {
+//        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation_field);
+//
+//        bottomNavigationView.setOnItemSelectedListener(item -> {
+//            int id = item.getItemId();
+//            if (id == R.id.navigation_home) {
+//                startActivity(new Intent(FieldMeasureActivity.this, MainActivity.class));
+//                return true;
+//            } else if (id == R.id.navigation_profile) {
+//                startActivity(new Intent(FieldMeasureActivity.this, ProfilePageActivity.class));
+//                return true;
+//            } else if (id == R.id.navigation_mandi) {
+//                startActivity(new Intent(FieldMeasureActivity.this, StatewiseMandiActivity.class));
+//                return true;
+//            } else if (id == R.id.navigation_news) {
+//                startActivity(new Intent(FieldMeasureActivity.this, NewsActivity.class));
+//                return true;
+//            }
+//            return false;
+//        });
+//    }
 
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
