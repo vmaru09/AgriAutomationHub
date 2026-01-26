@@ -47,31 +47,24 @@ public class PrivacyTermsActivity extends AppCompatActivity {
 
         }
 
-        back = findViewById(R.id.back_btn);
-
-        back.setOnClickListener(v -> {
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            startActivity(intent);
-            finish();
+        findViewById(R.id.back_btn_legal).setOnClickListener(v -> {
+            onBackPressed();
         });
 
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation_privacy_terms);
-
-        bottomNavigationView.setOnItemSelectedListener(item -> {
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation_legal);
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
             int id = item.getItemId();
-            if(id == R.id.navigation_home)
-            {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
-            }else if (id == R.id.navigation_news) {
-                // Handle News navigation
-                startActivity(new Intent(getApplicationContext(), FieldMeasureActivity.class));
+            if (id == R.id.navigation_home) {
+                startActivity(new Intent(this, MainActivity.class));
                 return true;
-            } else if (id == R.id.navigation_profile) {
-                startActivity(new Intent(getApplicationContext(), ProfilePageActivity.class));
+            } else if (id == R.id.navigation_news) {
+                startActivity(new Intent(this, NewsActivity.class));
                 return true;
             } else if (id == R.id.navigation_mandi) {
-                startActivity(new Intent(getApplicationContext(), StatewiseMandiActivity.class));
+                startActivity(new Intent(this, StatewiseMandiActivity.class));
+                return true;
+            } else if (id == R.id.navigation_profile) {
+                startActivity(new Intent(this, ProfilePageActivity.class));
                 return true;
             }
             return false;

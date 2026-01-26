@@ -143,7 +143,7 @@ public class FieldMeasureActivity extends AppCompatActivity implements OnMapRead
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         mMap = googleMap;
-        mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         getUserLocation();
 
         mMap.setOnMapClickListener(this::addVertex);

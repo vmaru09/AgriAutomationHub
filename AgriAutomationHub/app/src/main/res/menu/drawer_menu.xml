@@ -12,15 +12,18 @@
             android:id="@+id/nav_language"
             android:icon="@drawable/ic_language"
             android:title="@string/languages" />
-
         <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/ic_logout"
             android:title="@string/logout" />
     </group>
 
-    <item android:title=" ">
+    <item android:title="Support &amp; Social">
         <menu>
+            <item
+                android:id="@+id/nav_help"
+                android:icon="@drawable/fqas_icon"
+                android:title="@string/help" />
             <item
                 android:id="@+id/nav_facebook"
                 android:icon="@drawable/ic_facebook"
@@ -28,11 +31,11 @@
             <item
                 android:id="@+id/nav_share"
                 android:icon="@drawable/ic_share"
-                android:title="Share AgriAutomatioHub App" />
+                android:title="Share AgriAutomationHub App" />
         </menu>
     </item>
 
-    <item android:title=" ">
+    <item android:title="Legal">
         <menu>
             <item
                 android:id="@+id/nav_privacy"
@@ -40,9 +43,6 @@
             <item
                 android:id="@+id/nav_terms"
                 android:title="@string/terms_of_use" />
-            <item
-                android:id="@+id/nav_support"
-                android:title="@string/support" />
         </menu>
     </item>
 
