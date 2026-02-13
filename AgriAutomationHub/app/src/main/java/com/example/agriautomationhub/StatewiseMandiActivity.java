@@ -43,7 +43,7 @@ public class StatewiseMandiActivity extends AppCompatActivity {
 
     private AutoCompleteTextView spinnerState, spinnerDistrict, spinnerCommodity;
     private TextView selectedDateText, mandiOutputTextView;
-    private Button  btnFetch;
+    private Button btnFetch;
     RecyclerView recyclerView;
     MandiAdapter mandiAdapter;
     List<MandiData> mandiDataList = new ArrayList<>();
@@ -77,7 +77,6 @@ public class StatewiseMandiActivity extends AppCompatActivity {
         mandiAdapter = new MandiAdapter(mandiDataList);
         recyclerView.setAdapter(mandiAdapter);
 
-
         findViewById(R.id.back_btn_mandi).setOnClickListener(v -> onBackPressed());
 
         // Date Picker
@@ -104,22 +103,39 @@ public class StatewiseMandiActivity extends AppCompatActivity {
             updateDistrictSpinner(selectedState);
         });
 
+        // Ensure dropdown opens on click/focus
+        spinnerState.setOnClickListener(v -> spinnerState.showDropDown());
+        spinnerDistrict.setOnClickListener(v -> spinnerDistrict.showDropDown());
+        spinnerCommodity.setOnClickListener(v -> spinnerCommodity.showDropDown());
+
+        spinnerState.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus)
+                spinnerState.showDropDown();
+        });
+        spinnerDistrict.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus)
+                spinnerDistrict.showDropDown();
+        });
+        spinnerCommodity.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus)
+                spinnerCommodity.showDropDown();
+        });
+
         btnFetch.setOnClickListener(v -> {
             String state = spinnerState.getText().toString();
             String district = spinnerDistrict.getText().toString();
             String commodity = spinnerCommodity.getText().toString();
             String date = selectedDate;
 
-
             String key = (state + "-" + district).toLowerCase().trim();
             String key2 = (commodity).toLowerCase().trim();
             if (!stateDistrictMap.containsKey(key)) {
-                mandiOutputTextView.setText("Invalid state-district combination.");
+                Toast.makeText(this, "Invalid state-district combination.", Toast.LENGTH_SHORT).show();
                 return;
             }
 
             if (!commodityMap.containsKey(key2)) {
-                mandiOutputTextView.setText("Invalid commodity.");
+                Toast.makeText(this, "Invalid commodity.", Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -143,7 +159,7 @@ public class StatewiseMandiActivity extends AppCompatActivity {
             if (id == R.id.navigation_home) {
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 finish();
-            }else if (id == R.id.navigation_profile) {
+            } else if (id == R.id.navigation_profile) {
                 // Handle News navigation
                 startActivity(new Intent(getApplicationContext(), ProfilePageActivity.class));
                 finish();
@@ -165,11 +181,9 @@ public class StatewiseMandiActivity extends AppCompatActivity {
 
     public static String convertDateFormat(String inputDate) {
         try {
-            SimpleDateFormat inputFormat =
-                    new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
+            SimpleDateFormat inputFormat = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
 
-            SimpleDateFormat outputFormat =
-                    new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+            SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
 
             Date date = inputFormat.parse(inputDate);
             return outputFormat.format(date);
@@ -194,7 +208,7 @@ public class StatewiseMandiActivity extends AppCompatActivity {
                     String districtName = parts[3].trim();
 
                     String key = (stateName + "-" + districtName).toLowerCase();
-                    stateDistrictMap.put(key, new String[]{stateCode, districtCode});
+                    stateDistrictMap.put(key, new String[] { stateCode, districtCode });
                     stateSet.add(stateName);
                     stateCodeMap.put(stateName, stateCode);
                     districtCodeMap.put(stateName + "-" + districtName, districtCode);
@@ -215,7 +229,7 @@ public class StatewiseMandiActivity extends AppCompatActivity {
                     String CommodityName = parts[0].trim();
 
                     String key = (CommodityName).toLowerCase();
-                    commodityMap.put(key, new String[]{groupCode, CommodityCode});
+                    commodityMap.put(key, new String[] { groupCode, CommodityCode });
                 }
             }
             reader2.close();
@@ -251,7 +265,7 @@ public class StatewiseMandiActivity extends AppCompatActivity {
     }
 
     private String buildUrl(String stateCode, String districtCode, String commodityCode,
-                            String group, String date) {
+            String group, String date) {
         try {
             return "https://api.agmarknet.gov.in/v1/daily-price-arrival/report?" +
                     "from_date=" + URLEncoder.encode(date, "UTF-8") +
@@ -264,7 +278,7 @@ public class StatewiseMandiActivity extends AppCompatActivity {
                     "&market=[100002]" +
                     "&grade=[100003]" +
                     "&variety=[100007]" +
-                    "&page=1"+
+                    "&page=1" +
                     "&limit=10";
         } catch (Exception e) {
             return "";
@@ -296,9 +310,8 @@ public class StatewiseMandiActivity extends AppCompatActivity {
                     return;
                 }
 
-                JSONArray records =
-                        root.getJSONObject("data")
-                                .getJSONArray("records");
+                JSONArray records = root.getJSONObject("data")
+                        .getJSONArray("records");
 
                 mandiDataList.clear();
 
@@ -307,9 +320,8 @@ public class StatewiseMandiActivity extends AppCompatActivity {
                     return;
                 }
 
-                JSONArray dataArray =
-                        records.getJSONObject(0)
-                                .getJSONArray("data");
+                JSONArray dataArray = records.getJSONObject(0)
+                        .getJSONArray("data");
 
                 for (int i = 0; i < dataArray.length(); i++) {
                     JSONObject item = dataArray.getJSONObject(i);
@@ -320,8 +332,7 @@ public class StatewiseMandiActivity extends AppCompatActivity {
                     String maxPrice = item.optString("max_price");
                     String date = item.optString("arrival_date");
 
-                    MandiData mandiData =
-                            new MandiData(market, commodity, minPrice, maxPrice, date);
+                    MandiData mandiData = new MandiData(market, commodity, minPrice, maxPrice, date);
 
                     mandiDataList.add(mandiData);
                 }
@@ -335,16 +346,12 @@ public class StatewiseMandiActivity extends AppCompatActivity {
                 });
 
             } catch (Exception e) {
-                runOnUiThread(() ->
-                        showErrorRow("❌ Error: " + e.getMessage())
-                );
+                runOnUiThread(() -> showErrorRow("❌ Error: " + e.getMessage()));
             }
         }).start();
     }
 
     private void showErrorRow(String message) {
-        runOnUiThread(() ->
-                Toast.makeText(this, message, Toast.LENGTH_LONG).show()
-        );
+        runOnUiThread(() -> Toast.makeText(this, message, Toast.LENGTH_LONG).show());
     }
 }

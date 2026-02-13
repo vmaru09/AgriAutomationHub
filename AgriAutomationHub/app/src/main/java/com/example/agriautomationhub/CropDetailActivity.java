@@ -43,7 +43,7 @@ public class CropDetailActivity extends AppCompatActivity {
     protected void attachBaseContext(Context newBase) {
         // Get the saved language from shared preferences
         SharedPreferences sharedPreferences = newBase.getSharedPreferences("AppPreferences", Context.MODE_PRIVATE);
-        String language = sharedPreferences.getString("app_language", "en");  // Default to English if not set
+        String language = sharedPreferences.getString("app_language", "en"); // Default to English if not set
 
         Context context = LocaleHelper.setLocale(newBase);
         super.attachBaseContext(context);
@@ -56,21 +56,27 @@ public class CropDetailActivity extends AppCompatActivity {
 
         cropNameText = findViewById(R.id.cropNameText);
         expandableListView = findViewById(R.id.expandableListView);
+        com.google.android.material.appbar.CollapsingToolbarLayout collapsingToolbar = findViewById(
+                R.id.collapsingToolbar);
 
         AtomicReference<Intent> intent = new AtomicReference<>(getIntent());
         String cropName = intent.get().getStringExtra("cropName");
 
         if (cropName != null) {
-            // Convert to title case (capitalize first letter of each word)
             String titleCaseCropName = capitalizeFirstLetter(cropName);
             cropNameText.setText(titleCaseCropName);
+            if (collapsingToolbar != null) {
+                collapsingToolbar.setTitle(titleCaseCropName);
+            }
             loadCropDetails(cropName);
         } else {
             Log.e(TAG, "No crop name received in intent");
         }
 
         ImageView back = findViewById(R.id.back_btn_crop_detail);
-        back.setOnClickListener(v -> onBackPressed());
+        if (back != null) {
+            back.setOnClickListener(v -> onBackPressed());
+        }
     }
 
     // Method to capitalize the first letter of each word
@@ -138,18 +144,23 @@ public class CropDetailActivity extends AppCompatActivity {
                     populateListData(cropObject, s);
                 }
 
-//                if(current_lang.equals("en"))
-//                {
-//                    for (String s : Arrays.asList("Plant Selection", "Planting", "Monitoring", "Site Selection", "Field Preparation", "Weeding", "Irrigation", "Fertilization Organic", "Fertilization Chemical", "Preventive Measure", "Plant Protection Chemical", "Harvesting", "Post-Harvest")) {
-//                        populateListData(cropObject, s);
-//                    }
-//                }
-//                else if(current_lang.equals("hi"))
-//                {
-//                    for (String s : Arrays.asList("पौधों का चयन", "बीजाई", "निगरानी", "स्थान चयन", "फसल की तैयारी", "खरपतवार", "सिंचाई", "कार्बनिक उर्वरक", "रासायनिक उर्वरक", "निवारक उपाय", "रसायनिक संरक्षण", "कटाई", "पोस्ट-हार्वेस्ट")) {
-//                        populateListData(cropObject, s);
-//                    }
-//                }
+                // if(current_lang.equals("en"))
+                // {
+                // for (String s : Arrays.asList("Plant Selection", "Planting", "Monitoring",
+                // "Site Selection", "Field Preparation", "Weeding", "Irrigation",
+                // "Fertilization Organic", "Fertilization Chemical", "Preventive Measure",
+                // "Plant Protection Chemical", "Harvesting", "Post-Harvest")) {
+                // populateListData(cropObject, s);
+                // }
+                // }
+                // else if(current_lang.equals("hi"))
+                // {
+                // for (String s : Arrays.asList("पौधों का चयन", "बीजाई", "निगरानी", "स्थान
+                // चयन", "फसल की तैयारी", "खरपतवार", "सिंचाई", "कार्बनिक उर्वरक", "रासायनिक
+                // उर्वरक", "निवारक उपाय", "रसायनिक संरक्षण", "कटाई", "पोस्ट-हार्वेस्ट")) {
+                // populateListData(cropObject, s);
+                // }
+                // }
 
                 listAdapter = new CropDetailAdapter(this, listDataHeader, listDataChild);
                 expandableListView.setAdapter(listAdapter);

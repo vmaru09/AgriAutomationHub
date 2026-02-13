@@ -63,6 +63,9 @@ public class MainActivity extends AppCompatActivity {
     private static final String BASE_URL = "https://api.openweathermap.org/data/2.5/";
 
     private FusedLocationProviderClient fusedLocationClient;
+    private com.google.android.gms.location.LocationCallback locationCallback;
+    private com.google.android.gms.location.LocationRequest locationRequest;
+    private boolean isWeatherFetched = false;
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
@@ -187,20 +190,8 @@ public class MainActivity extends AppCompatActivity {
         weatherInfo = findViewById(R.id.weather_info);
         weatherLocation = findViewById(R.id.weather_location);
         weatherIcon = findViewById(R.id.weather_icon_main);
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
-        // Location Permission
-        if (ActivityCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(this,
-                        Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    new String[] { Manifest.permission.ACCESS_FINE_LOCATION,
-                            Manifest.permission.ACCESS_COARSE_LOCATION },
-                    LOCATION_PERMISSION_REQUEST_CODE);
-        } else {
-            getLastLocation();
-        }
+        setupLocationRequests();
 
         // FAB Chatbot
         FloatingActionButton fabChatBot = findViewById(R.id.fabChatBot);
@@ -211,6 +202,60 @@ public class MainActivity extends AppCompatActivity {
 
         initializeServices();
         initializeBottomNavigation();
+    }
+
+    private void setupLocationRequests() {
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+
+        locationRequest = com.google.android.gms.location.LocationRequest.create();
+        locationRequest.setPriority(com.google.android.gms.location.LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+        locationRequest.setInterval(10000); // 10 seconds
+        locationRequest.setFastestInterval(5000); // 5 seconds
+
+        locationCallback = new com.google.android.gms.location.LocationCallback() {
+            @Override
+            public void onLocationResult(@NonNull com.google.android.gms.location.LocationResult locationResult) {
+                for (android.location.Location location : locationResult.getLocations()) {
+                    if (location != null && !isWeatherFetched) {
+                        getWeatherData(location.getLatitude(), location.getLongitude());
+                        isWeatherFetched = true; // Avoid excessive calls
+                    }
+                }
+            }
+        };
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        startLocationUpdates();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        stopLocationUpdates();
+    }
+
+    private void startLocationUpdates() {
+        if (ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this,
+                        Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[] { Manifest.permission.ACCESS_FINE_LOCATION,
+                            Manifest.permission.ACCESS_COARSE_LOCATION },
+                    LOCATION_PERMISSION_REQUEST_CODE);
+            return;
+        }
+        fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback,
+                android.os.Looper.getMainLooper());
+    }
+
+    private void stopLocationUpdates() {
+        if (fusedLocationClient != null && locationCallback != null) {
+            fusedLocationClient.removeLocationUpdates(locationCallback);
+        }
     }
 
     private void fetchUserData(String uid) {
@@ -374,24 +419,8 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
     private void getLastLocation() {
-        if (ActivityCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(this,
-                        Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    new String[] { Manifest.permission.ACCESS_FINE_LOCATION,
-                            Manifest.permission.ACCESS_COARSE_LOCATION },
-                    LOCATION_PERMISSION_REQUEST_CODE);
-            return;
-        }
-        fusedLocationClient.getLastLocation()
-                .addOnSuccessListener(this, location -> {
-                    if (location != null) {
-                        getWeatherData(location.getLatitude(), location.getLongitude());
-                    } else {
-                        weatherInfo.setText(R.string.unable_to_get_location);
-                    }
-                });
+        // This is now handled reactively by startLocationUpdates()
+        startLocationUpdates();
     }
 
     private void getWeatherData(double latitude, double longitude) {

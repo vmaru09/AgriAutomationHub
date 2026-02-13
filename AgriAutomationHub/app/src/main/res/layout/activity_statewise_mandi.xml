@@ -94,7 +94,7 @@
                             android:id="@+id/spinnerState"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="none" />
+                            android:inputType="text" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <!-- District Selection -->
@@ -113,7 +113,7 @@
                             android:id="@+id/spinnerDistrict"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="none" />
+                            android:inputType="text" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <!-- Crop Selection -->
@@ -132,7 +132,7 @@
                             android:id="@+id/spinnerCommodity"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="none" />
+                            android:inputType="text" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <!-- Date Selection -->

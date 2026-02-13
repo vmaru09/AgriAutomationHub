@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.text.SpannableString;
 import android.text.style.StyleSpan;
@@ -22,7 +23,8 @@ public class CropDetailAdapter extends BaseExpandableListAdapter {
     private final List<String> listDataHeader;
     private final HashMap<String, List<Object>> listDataChild;
 
-    public CropDetailAdapter(Context context, List<String> listDataHeader, HashMap<String, List<Object>> listDataChild) {
+    public CropDetailAdapter(Context context, List<String> listDataHeader,
+            HashMap<String, List<Object>> listDataChild) {
         this.context = context;
         this.listDataHeader = listDataHeader;
         this.listDataChild = listDataChild;
@@ -105,11 +107,22 @@ public class CropDetailAdapter extends BaseExpandableListAdapter {
             }
 
             TextView lblListHeader = convertView.findViewById(R.id.group_header);
+            ImageView indicator = convertView.findViewById(R.id.group_indicator_icon);
+
             Object g = getGroup(groupPosition);
             String header = (g == null) ? "" : g.toString();
             lblListHeader.setText(header);
 
-            // DEBUG: force visible text color if you suspect theming issues (uncomment to test)
+            if (indicator != null) {
+                if (isExpanded) {
+                    indicator.setRotation(180f);
+                } else {
+                    indicator.setRotation(0f);
+                }
+            }
+
+            // DEBUG: force visible text color if you suspect theming issues (uncomment to
+            // test)
             // lblListHeader.setTextColor(Color.BLACK);
 
             return convertView;
@@ -121,7 +134,8 @@ public class CropDetailAdapter extends BaseExpandableListAdapter {
 
     // Child view
     @Override
-    public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+    public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView,
+            ViewGroup parent) {
         try {
             if (convertView == null) {
                 LayoutInflater inflater = LayoutInflater.from(context);
@@ -140,11 +154,13 @@ public class CropDetailAdapter extends BaseExpandableListAdapter {
             SpannableString spannableString = new SpannableString(text);
             int colonIndex = text.indexOf(":");
             if (colonIndex > 0) {
-                spannableString.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), 0, colonIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                spannableString.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), 0, colonIndex,
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             }
             txtListChild.setText(spannableString);
 
-            // DEBUG: force visible text color if you suspect theming issues (uncomment to test)
+            // DEBUG: force visible text color if you suspect theming issues (uncomment to
+            // test)
             // txtListChild.setTextColor(Color.BLACK);
 
             // Ensure visible
